@@ -8,7 +8,6 @@
 <script>
 import BaseHeader from '@/components/Common/BaseHeader'
 import BaseFooter from '@/components/Common/BaseFooter'
-import { isMobile } from '@/utils'
 
 export default {
   components: {
@@ -26,7 +25,6 @@ export default {
     // }
   },
   created () {
-    this.$store.dispatch('setMobileFlag', isMobile())
   },
   mounted () {
   },

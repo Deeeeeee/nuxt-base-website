@@ -84,6 +84,8 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    // css 全部打包到外部链接
+    extractCSS: { allChunks: true },
     postcss: {
       // 添加插件名称作为键，参数作为值
       plugins: {

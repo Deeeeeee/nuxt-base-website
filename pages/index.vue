@@ -2,6 +2,9 @@
   <div class="page page-home">
     <base-carousel :list="banners" class="show-in-pc banner-pc" />
     <base-carousel :list="banners" class="show-in-h5 banner-h5" />
+    <div class="img-box layout">
+      <img v-for="item in newsList" :key="item.id" :src="item.image" alt="">
+    </div>
   </div>
 </template>
 <script>
@@ -19,6 +22,7 @@ export default {
   },
   data () {
     return {
+      newsList: [],
       banners: [
         { image: 'https://oss.zhihanyun.com/FkcOt9mY1-n-NaD-tdmq8DmKiYPI', link: 'http://www.baidu.com' },
         { image: 'https://oss.zhihanyun.com/FkcOt9mY1-n-NaD-tdmq8DmKiYPI' }
@@ -36,15 +40,11 @@ export default {
       page: 1
     }
     return newsList(params).then((res) => {
-      console.log(res)
-      const imgNewsArr = (res.data.array || []).slice(0, 5)
       return {
-        imgNewsArr,
-        newsArr: res.data.array.map((item) => {
+        newsList: res.data.array.map((item) => {
           delete item.content
           return item
-        }) || [],
-        newTitle: imgNewsArr[0].title
+        }) || []
       }
     }).catch(() => {
     })
@@ -59,17 +59,38 @@ export default {
 }
 </script>
 <style lang="scss" type="text/scss">
-  @media (min-width: 750PX) {
+  @media (min-width: 750px) {
     .page-home {
       .banner-pc {
-        height: 500PX;
+        height: 500px;
+      }
+      .img-box{
+        img {
+          box-sizing: border-box;
+          width: 280px;
+          height: 280px;
+          margin: 0 10px 10px;
+          border: 1px solid #ccc;
+          object-fit: cover;
+        }
       }
     }
   }
-  @media (max-width: 750PX) {
+  @media (max-width: 750px) {
     .page-home{
       .banner-h5{
         height: 400px;
+      }
+
+      .img-box{
+        img {
+          box-sizing: border-box;
+          width: 280px;
+          height: 280px;
+          margin: 0 10px 10px;
+          border: 1PX solid #ccc;
+          object-fit: cover;
+        }
       }
     }
   }

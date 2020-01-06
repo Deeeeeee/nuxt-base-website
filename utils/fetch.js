@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import { Message } from 'element-ui'
+import { Message } from 'element-ui'
 // 创建axios实例
 import baseApi from './baseApi'
 // let params = {}
@@ -33,6 +33,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use((config) => {
   // config.headers['accesstoken'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+  config.headers.organizeCode = 'xd1Nf0882000'
   return config
 }, (error) => {
   // Do something with request error
@@ -52,7 +53,7 @@ service.interceptors.response.use(
       // if (res.code === 40001) {
       //
       // } else {
-      alert(res.message)
+      Message.error(res.message)
       // }
       return Promise.reject(response.data)
     } else {
