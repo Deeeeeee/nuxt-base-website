@@ -1,12 +1,9 @@
-let baseApi = ''
-switch (process.env.NODE_ENV) {
-  case 'production':
-    baseApi = 'https://api.ececloud.cn'
-    break
-  case 'development':
-    baseApi = 'https://test.api.ececloud.cn'
-    break
-  default:
-    baseApi = 'https://' + process.env.NODE_ENV + '.api.ececloud.cn'
+// console.log(process.env.NODE_ENV)
+// console.log(process.env.NUXT_ENV_API)
+const map = {
+  'development': 'http://test.api.ececloud.cn/',
+  'test': 'http://test.api.ececloud.cn/',
+  'pre': 'http://pre.api.ececloud.cn/',
+  'production': 'https://api.ececloud.cn'
 }
-export default baseApi
+export default map[process.env.NUXT_ENV_API]

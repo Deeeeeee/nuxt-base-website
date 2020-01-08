@@ -11,6 +11,13 @@
           </nuxt-link>
         </li>
       </ul>
+      <nuxt-link v-if="!token" to="/login">
+        登录
+      </nuxt-link>
+      <span v-else @click="logout">
+        退出
+      </span>
+
       <van-icon @click="visible = true" class="toggle show-in-h5 " name="bars" />
     </div>
     <van-popup
@@ -30,6 +37,8 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'BaseHeader',
   props: {},
@@ -66,8 +75,11 @@ export default {
       ]
     }
   },
-
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
   watch: {
     // $route: function (newVal) {
     //   let reg = RegExp(/\/login|\/register|\/forget|\/apply/)
@@ -78,7 +90,16 @@ export default {
   },
   mounted () {
   },
-  methods: {}
+  methods: {
+    logout () {
+      this.$store.dispatch('Logout').then((res) => {
+        this.$router.push({
+          path: '/'
+        })
+      }).catch(() => {
+      })
+    }
+  }
 }
 
 </script>
@@ -123,7 +144,7 @@ export default {
       height: $NavHeightH5;
       line-height: $NavHeightH5;
       background-color: #000;
-      font-size: 18px;
+      font-size: 32px;
       color: #fff;
       .wrap{
         display: flex;

@@ -1,6 +1,10 @@
 
 module.exports = {
   mode: 'universal',
+  server: {
+    port: 8000, // default: 3000
+    host: '0.0.0.0' // default: localhost
+  },
   /*
   ** Headers of the page
   */
@@ -14,8 +18,8 @@ module.exports = {
       { hid: 'viewport', name: 'viewport', content: 'user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1' },
       { hid: 'render', name: 'render', content: 'webkit' },
       { hid: 'http-equiv', 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' },
-      { hid: 'keywords', name: 'keywords', content: '思迪猫 幼儿stem教育 steam教育  幼儿创客  科学发现室 幼儿科学实验  幼儿园科学室  幼儿科学教育  科学探索装置' },
-      { hid: 'description', name: 'description', content: '思迪猫-专为中国3-8岁幼儿设计的Stem教育产品' }
+      { hid: 'keywords', name: 'keywords', content: '关键字 关键字 关键字' },
+      { hid: 'description', name: 'description', content: '网站描述' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -25,6 +29,9 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
+  router: {
+    middleware: 'auth'
+  },
   /*
   ** Global CSS
   */
@@ -85,7 +92,7 @@ module.exports = {
   */
   build: {
     // css 全部打包到外部链接
-    extractCSS: { allChunks: true },
+    // extractCSS: { allChunks: true },
     postcss: {
       // 添加插件名称作为键，参数作为值
       plugins: {
@@ -96,7 +103,8 @@ module.exports = {
         // 'postcss-hexrgba': {}
         'postcss-plugin-px2rem': {
           rootValue: 100,
-          exclude: /(node_module)/
+          exclude: /(node_module)/,
+          selectorBlackList: ['.__nuxt-error-page']
         }
       },
       preset: {

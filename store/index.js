@@ -69,6 +69,7 @@ const store = () => new Vuex.Store({
             setRootId(res.data.organizes[0].organizeId)
           }
           commit('SET_TOKEN', res.data.accesstoken)
+
           resolve()
         }).catch((error) => {
           reject(error)
