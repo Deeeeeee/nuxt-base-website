@@ -14,13 +14,13 @@
           <el-form-item prop="password">
             <el-input
               v-model="postForm.password"
-              @keyup.enter.native="handleLogin"
               :maxlength="20"
               class="login-input"
               type="password"
               auto-complete="on"
               placeholder="密码"
               show-message
+              @keyup.enter.native="handleLogin"
             >
               <i slot="prefix" class="el-input__icon icon-password" />
             </el-input>
@@ -29,7 +29,7 @@
             </nuxt-link>
           </el-form-item>
           <div class="button-group">
-            <el-button :loading="loading" @click="handleLogin" type="primary" class="w-100" round>
+            <el-button :loading="loading" type="primary" class="w-100" round @click="handleLogin">
               登录
             </el-button>
             <nuxt-link to="/register" class="register">
@@ -49,10 +49,8 @@ export default {
   layout: 'simple',
   components: {},
   scrollToTop: true,
-  head () {
-    return {
-      title: '登录'
-    }
+  // nuxt 异步数据设置方式
+  asyncData (context) {
   },
   data () {
     const validatePhone = (rule, value, callback) => {
@@ -86,9 +84,6 @@ export default {
     }
   },
   computed: {},
-  // nuxt 异步数据设置方式
-  asyncData (context) {
-  },
   created () {
   },
   beforeDestroy () {
@@ -114,6 +109,11 @@ export default {
           return false
         }
       })
+    }
+  },
+  head () {
+    return {
+      title: '登录'
     }
   }
 }

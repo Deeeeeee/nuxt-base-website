@@ -40,5 +40,5 @@ export function getCookiesInServer (req) {
   return serviceCookie
 }
 export function isMobile () {
-  // return /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)
+  return /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)
 }

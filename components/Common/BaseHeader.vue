@@ -2,7 +2,7 @@
   <div class="base-header">
     <div class="layout wrap">
       <nuxt-link class="logo fl" to="/">
-        LOGO
+        LOGO {{ $t('Home') }}
       </nuxt-link>
       <ul class="show-in-pc nav fr">
         <li v-for="(item,index) in nav" :key="index" class="nav-item">
@@ -17,8 +17,9 @@
       <span v-else @click="logout">
         退出
       </span>
-
-      <van-icon @click="visible = true" class="toggle show-in-h5 " name="bars" />
+      <!--      <span @click="switchLanguage">语言 {{ $i18n.locale }}</span>-->
+      <LanguageSwitcher />
+      <van-icon class="toggle show-in-h5 " name="bars" @click="visible = true" />
     </div>
     <van-popup
       v-model="visible"
@@ -38,17 +39,30 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import LanguageSwitcher from '@/components/Common/LanguageSwitcher'
 
 export default {
   name: 'BaseHeader',
+  components: { LanguageSwitcher },
   props: {},
   data () {
     return {
-      visible: false,
-      nav: [
+      lang: this.$i18n.locale,
+      visible: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'token'
+    ]),
+    langList () {
+      return this.$i18n.locales
+    },
+    nav () {
+      return [
         {
           src: '/',
-          title: '首页'
+          title: this.$t('Home')
         },
         {
           src: '/story',
@@ -74,11 +88,7 @@ export default {
         }
       ]
     }
-  },
-  computed: {
-    ...mapGetters([
-      'token'
-    ])
+
   },
   watch: {
     // $route: function (newVal) {

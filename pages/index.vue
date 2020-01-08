@@ -14,22 +14,6 @@ export default {
   name: 'Home',
   components: { BaseCarousel },
   scrollToTop: true,
-  head () {
-    return {
-      title: '官网'
-    }
-  },
-  data () {
-    return {
-      newsList: [],
-      banners: [
-        { image: 'https://oss.zhihanyun.com/Fv8JzFMnVY6tCq4vGZAhVIxJbOmw', link: 'http://www.baidu.com' },
-        { image: 'https://oss.zhihanyun.com/FkcOt9mY1-n-NaD-tdmq8DmKiYPI' }
-      ],
-      currentIndex: 0
-    }
-  },
-  computed: {},
   // nuxt 异步数据设置方式
   asyncData (context) {
     const params = {
@@ -49,13 +33,29 @@ export default {
       console.error('> ERROR:', e.message)
     })
   },
+  data () {
+    return {
+      newsList: [],
+      banners: [
+        { image: 'https://oss.zhihanyun.com/Fv8JzFMnVY6tCq4vGZAhVIxJbOmw', link: 'http://www.baidu.com' },
+        { image: 'https://oss.zhihanyun.com/FkcOt9mY1-n-NaD-tdmq8DmKiYPI' }
+      ],
+      currentIndex: 0
+    }
+  },
+  computed: {},
   created () {
   },
   beforeDestroy () {
   },
   mounted () {
   },
-  methods: {}
+  methods: {},
+  head () {
+    return {
+      title: '官网'
+    }
+  }
 }
 </script>
 <style lang="scss" type="text/scss">

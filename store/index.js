@@ -2,6 +2,7 @@
 import Vuex from 'vuex'
 import md5 from 'js-md5'
 // import fetch from '~/utils/fetch'
+import { isMobile } from '@/utils'
 import { setToken, removeToken, setRootId, romveRootId } from '@/utils/auth'
 import { login, getInfo, logout } from '@/api/login'
 import { getCookiesInServer } from '@/utils'
@@ -11,10 +12,15 @@ import { getCookiesInServer } from '@/utils'
 const store = () => new Vuex.Store({
 
   state: {
+    isMobile: process.cilent ? isMobile() : undefined,
+    lang: '',
     token: '',
     userInfo: ''
   },
   mutations: {
+    SET_LANG (state, lang) {
+      state.lang = lang
+    },
     SET_TOKEN (state, token) {
       state.token = token
       setToken(token)
@@ -24,6 +30,7 @@ const store = () => new Vuex.Store({
     }
   },
   getters: {
+    isMobile: state => state.isMobile,
     token: state => state.token,
     userInfo: state => state.userInfo
   },
@@ -36,24 +43,6 @@ const store = () => new Vuex.Store({
       } else {
         commit('SET_TOKEN', '')
       }
-      // const token = cookies[TokenKey] ? cookies[TokenKey] : ''
-      // return new Promise((resolve, reject) => {
-      //   fetch({
-      //     url: '/admin/admin/info',
-      //     method: 'post',
-      //     headers: {
-      //       accesstoken: token
-      //     }
-      //   }).then(res => {
-      //     console.log(222)
-      //     store.commit('SET_TOKEN', res.data.accesstoken)
-      //     resolve()
-      //   }).catch(err => {
-      //     store.commit('SET_TOKEN', '')
-      //     console.log(333)
-      //     resolve()
-      //   })
-      // })
     },
 
     // 登录
@@ -76,6 +65,7 @@ const store = () => new Vuex.Store({
         })
       })
     },
+
     // 获取用户信息
     GetInfo ({ commit }) {
       return new Promise((resolve, reject) => {
@@ -106,6 +96,7 @@ const store = () => new Vuex.Store({
         })
       })
     },
+
     // 前端登出
     FELogout ({ commit, state }) {
       return new Promise((resolve) => {
