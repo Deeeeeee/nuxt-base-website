@@ -1,7 +1,7 @@
 <template>
   <div class="no-data">
     <!--    <img :src="image || $image.DEFAULT_NO_DATA" alt="">-->
-    <p v-html="text" />
+    <p>{{ text }}</p>
   </div>
 </template>
 <script>

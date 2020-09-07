@@ -8,17 +8,27 @@
     >
       <slot name="top" />
       <!-- @load="getData" -->
-      <div v-for="(item, index) in newList" :key="index">
-        <slot name="item" :row="item" :index="index" />
-      </div>
+      <transition-group name="list-complete" tag="p">
+        <div v-for="(item, index) in newList" :key="item.id">
+          <slot name="item" :row="item" :index="index" />
+        </div>
+      </transition-group>
       <no-data v-if="noData" class="no-data-box" :text="noDataText" :image="noDataImg" />
     </van-list>
+
+    <ul v-show="newList.length > 0" class="news-list">
+      <transition-group name="list-complete" tag="p">
+        <li v-for="(item) in []" :key="item.id" class="clearfix list-complete-item">
+          <slot name="item" :row="item" :index="index" />
+        </li>
+      </transition-group>
+    </ul>
   </div>
 </template>
 
 <script>
 import NoData from '@/components/NoData'
-import request from '@/utils/request'
+import fetch from '@/utils/fetch'
 
 export default {
   components: {
@@ -34,7 +44,8 @@ export default {
       default: '暂无数据'
     },
     noDataImg: {
-      type: String
+      type: String,
+      default: ''
     },
     searchParams: {
       type: Object
@@ -69,7 +80,8 @@ export default {
       this.params = { ...this.params, ...this.searchParams }
     }
   },
-  mounted () {},
+  mounted () {
+  },
   methods: {
     getData () {
       console.log('> load more...')
@@ -80,7 +92,7 @@ export default {
       this.moreLoading = true
       this.finishedText = ''
       this.noData = false
-      request({
+      fetch({
         url: this.api,
         method: 'post',
         data: {
@@ -104,7 +116,8 @@ export default {
         if (this.params.page > data.totalPage) {
           this.finished = true
         }
-      }).catch(() => {})
+      }).catch(() => {
+      })
     },
     refresh () {
       return new Promise((resolve, reject) => {
@@ -113,7 +126,7 @@ export default {
         this.refreshLoading = true
         this.finishedText = ''
         this.params.page = 1
-        request({
+        fetch({
           url: this.api,
           method: 'post',
           data: {
@@ -138,7 +151,8 @@ export default {
             this.noData = false
           }
           resolve()
-        }).catch(() => {})
+        }).catch(() => {
+        })
       })
     }
   }
@@ -146,13 +160,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .base-list{
+  .base-list {
     padding-bottom: 100px;
   }
-  .loading-icon{
+
+  .loading-icon {
     width: 80px;
   }
-  .no-data-box{
+
+  .no-data-box {
     padding-top: 200px;
+  }
+
+  .list-complete-item {
+    transition: all 1s;
+  }
+
+  .list-complete-enter, .list-complete-leave-to
+    /* .list-complete-leave-active for below version 2.1.8 */
+  {
+    transform: translateX(30px);
+  }
+
+  .list-complete-leave-active {
+    position: absolute;
+    display: none;
   }
 </style>

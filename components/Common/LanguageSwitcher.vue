@@ -3,15 +3,14 @@
     <nuxt-link
       v-for="(locale, i) in showLocales"
       :key="i"
-      :to="switchLocalePath(locale.code)"
+      :to="switchLocalePath(locale.code)==='/en' ? '/en/' : switchLocalePath(locale.code)"
     >
-      <span @click="handleChangeLang(locale.code)">点击切换{{ locale.name }}</span>
+      <span @click="handleChangeLang(locale.code)">{{ locale.name }}</span>
     </nuxt-link>
   </span>
 </template>
 
 <script>
-const Cookie = process.client ? require('js-cookie') : undefined
 export default {
   name: 'LangSwitcher',
   computed: {
@@ -19,10 +18,12 @@ export default {
       return this.$i18n.locales.filter(locale => locale.code !== this.$i18n.locale)
     }
   },
+  created () {
+  },
   methods: {
     handleChangeLang (lang) {
+      console.log(JSON.stringify(this.showLocales))
       this.$store.commit('SET_LANG', lang)
-      Cookie.set('lang', lang)
     }
   }
 }

@@ -15,6 +15,7 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'nuxt/no-cjs-in-config': 'off',
-    'import/no-mutable-exports': 'off'
+    'import/no-mutable-exports': 'off',
+    'vue/require-default-prop': 'off',
   }
 }

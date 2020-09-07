@@ -2,13 +2,10 @@
 import Vuex from 'vuex'
 import md5 from 'js-md5'
 // import fetch from '~/utils/fetch'
-import { isMobile } from '@/utils'
+import { isMobile, getCookiesInServer, setCookie } from '@/utils'
 import { setToken, removeToken, setRootId, romveRootId } from '@/utils/auth'
 import { login, getInfo, logout } from '@/api/login'
-import { getCookiesInServer } from '@/utils'
-
 // const TokenKey = 'token'
-
 const store = () => new Vuex.Store({
 
   state: {
@@ -20,6 +17,7 @@ const store = () => new Vuex.Store({
   mutations: {
     SET_LANG (state, lang) {
       state.lang = lang
+      setCookie('lang', lang)
     },
     SET_TOKEN (state, token) {
       state.token = token
